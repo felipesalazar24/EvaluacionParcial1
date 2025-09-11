@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Usuario</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h3>Crear una Cuenta</h3>
+                        <p class="mb-0">Unete a nosotros</p>
+                    </div>
+                    <div class="card-body p-4">
+                        <form id="registroForm" novalidate>
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Nombre Completo</label>
+                                <input type="text" class="form-control" id="nombre" required>
+                                <div class="invalid-feedback">
+                                    Por favor ingresa tu nombre completo.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Correo Electronico</label>
+                                <input type="email" class="form-control" id="email" required>
+                                <div class="invalid-feedback">
+                                    Por favor ingresa un correo electronico valido.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Contraseña</label>
+                                <input type="password" class="form-control" id="password" required>
+                                <div class="invalid-feedback">
+                                    Por favor ingresa una contraseña valida
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password2" class="form-label">Confirmar Contraseña</label>
+                                <input type="password" class="form-control" id="password2" required>
+                                <div class="invalid-feedback">
+                                    Las contraseñas no coinciden.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="telefono" class="form-label">Telefono</label>
+                                <span class="badge optional-badge ms-1">Opcional</span>
+                                <input type="tel" class="form-control" id="telefono" placeholder="+569 12345678">
+                                <div class="invalid-feedback">
+                                    Ingresa un numero de telefono valido (+569 12345678).
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="region" class="form-label">Región</label>
+                                <select class="form-select" id="region">
+                                    <option value="" selected disabled>--Seleccione la región--</option>
+                                    <option value="Arica y Parinacota">Arica y Parinacota</option>
+                                    <option value="Tarapacá">Tarapacá</option>
+                                    <option value="Antofagasta">Antofagasta</option>
+                                    <option value="Atacama">Atacama</option>
+                                    <option value="Coquimbo">Coquimbo</option>
+                                    <option value="Valparaíso">Valparaíso</option>
+                                    <option value="Metropolitana">Metropolitana</option>
+                                    <option value="O´Higgins">O´Higgins</option>
+                                    <option value="Maule">Maule</option>
+                                    <option value="Ñuble">Ñuble</option>
+                                    <option value="Biobío">Biobío</option>
+                                    <option value="Araucanía">Araucanía</option>
+                                    <option value="Los Ríos">Los Ríos</option>
+                                    <option value="Los Lagos">Los Lagos</option>
+                                    <option value="Aysén">Aysén</option>
+                                    <option value="Magallanes">Magallanes</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="comuna" class="form-label">Comuna</label>
+                                <select class="form-select" id="comuna">
+                                    <option value="" selected disabled>--Seleccione la comuna--</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-success w-100 mt-3">Registrarse</button>
+                            <p class="nav justify-content-center">¿Ya tienes una cuenta?</p>
+                            <a href="login.html" class="btn btn-primary w-100 mt-3">Iniciar Sesion</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
