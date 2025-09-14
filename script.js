@@ -2,75 +2,75 @@
 const productos = [
     {
         id: 1,
-        nombre: "Manzana Roja",
+        nombre: "test1",
         precio: 100,
         imagen: "assets/1.jpg",
-        descripcion: "Las manzanas rojas son frutas frescas y deliciosas, ideales para cualquier ocasión.",
-        miniaturas: ["assets/1.jpg", "assets/2.jpg"],
-        atributo: "Fruta fresca"
+        descripcion: "nose",
+        miniaturas: ["assets/1.jpg"],
+        atributo: "nose"
     },
     {
         id: 2,
-        nombre: "Banana",
+        nombre: "test2",
         precio: 80,
         imagen: "assets/2.jpg",
-        descripcion: "Las bananas son frutas tropicales con alto contenido de potasio y energía.",
+        descripcion: "nose",
         miniaturas: ["assets/2.jpg", "assets/1.jpg"],
-        atributo: "Fruta tropical"
+        atributo: "nose"
     },
     {
         id: 3,
-        nombre: "Pera",
+        nombre: "test3",
         precio: 90,
-        imagen: "assets/1.jpg",
-        descripcion: "Las peras son frutas jugosas y suaves, perfectas para postres y meriendas.",
-        miniaturas: ["assets/1.jpg", "assets/2.jpg"],
-        atributo: "Fruta de temporada"
+        imagen: "assets/3.jpg",
+        descripcion: "nose",
+        miniaturas: ["assets/3.jpg","assets/2.jpg","assets/1.jpg"],
+        atributo: "nose"
     },
     {
         id: 4,
-        nombre: "Naranja",
-        precio: 70,
-        imagen: "assets/2.jpg",
-        descripcion: "Las naranjas aportan vitamina C, ideales en jugos naturales.",
-        miniaturas: ["assets/2.jpg", "assets/1.jpg"],
-        atributo: "Cítrico"
+        nombre: "titulo",
+        precio: 0,
+        imagen: "assets/3.jpg",
+        descripcion: "nose",
+        miniaturas: ["assets/3.jpg"],
+        atributo: "nose"
     },
     {
         id: 5,
-        nombre: "Uva",
-        precio: 110,
-        imagen: "assets/1.jpg",
-        descripcion: "Las uvas son dulces y se pueden comer solas o en ensaladas.",
-        miniaturas: ["assets/1.jpg", "assets/2.jpg"],
-        atributo: "Fruta en racimo"
+        nombre: "titulo",
+        precio: 0,
+        imagen: "assets/3.jpg",
+        descripcion: "nose",
+        miniaturas: ["assets/3.jpg"],
+        atributo: "nose"
     },
     {
         id: 6,
-        nombre: "Melón",
-        precio: 95,
-        imagen: "assets/2.jpg",
-        descripcion: "El melón es refrescante y perfecto para días calurosos.",
-        miniaturas: ["assets/2.jpg", "assets/1.jpg"],
-        atributo: "Fruta refrescante"
+        nombre: "titulo",
+        precio: 0,
+        imagen: "assets/3.jpg",
+        descripcion: "nose",
+        miniaturas: ["assets/3.jpg"],
+        atributo: "nose"
     },
     {
         id: 7,
-        nombre: "Sandía",
-        precio: 120,
-        imagen: "assets/1.jpg",
-        descripcion: "La sandía es la fruta ideal para hidratarte en verano.",
-        miniaturas: ["assets/1.jpg", "assets/2.jpg"],
-        atributo: "Fruta grande"
+        nombre: "titulo",
+        precio: 0,
+        imagen: "assets/3.jpg",
+        descripcion: "nose",
+        miniaturas: ["assets/3.jpg"],
+        atributo: "nose"
     },
     {
         id: 8,
-        nombre: "Kiwi",
-        precio: 130,
-        imagen: "assets/2.jpg",
-        descripcion: "El kiwi tiene un sabor único y es rico en vitamina C.",
-        miniaturas: ["assets/2.jpg", "assets/1.jpg"],
-        atributo: "Fruta exótica"
+        nombre: "titulo",
+        precio: 0,
+        imagen: "assets/3.jpg",
+        descripcion: "nose",
+        miniaturas: ["assets/3.jpg"],
+        atributo: "nose"
     }
 ];
 
@@ -316,10 +316,10 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("product-desc").textContent = prod.descripcion;
 
         // Miniaturas
-        const thumbs = document.querySelectorAll(".thumb");
-        prod.miniaturas.forEach((src, idx) => {
-            if (thumbs[idx]) thumbs[idx].src = src;
-        });
+        const thumbsContainer = document.getElementById("thumbs-container");
+        thumbsContainer.innerHTML = prod.miniaturas.map(src =>
+            `<img src="${src}" class="img-thumbnail thumb" style="height:60px;width:60px;object-fit:cover;cursor:pointer;" onclick="changeImg('${src}')">`
+        ).join('');
 
         // Productos relacionados
         if(document.getElementById("related-products")) {

@@ -30,10 +30,7 @@
             <!-- Imagen principal y miniaturas -->
             <div class="col-md-6">
                 <img id="main-img" src="" alt="Producto" class="img-fluid border mb-3" style="height:320px;object-fit:contain;width:100%;">
-                <div class="d-flex gap-2">
-                    <img src="" class="img-thumbnail thumb" style="height:60px;width:60px;object-fit:cover;" onclick="changeImg(this.src)">
-                    <img src="" class="img-thumbnail thumb" style="height:60px;width:60px;object-fit:cover;" onclick="changeImg(this.src)">
-                </div>
+                <div class="d-flex gap-2 flex-wrap" id="thumbs-container"></div>
             </div>
             <!-- Info producto -->
             <div class="col-md-6">
@@ -59,5 +56,4 @@
 
     <script src="script.js"></script>
 </body>
-
 </html>
