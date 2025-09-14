@@ -1,4 +1,4 @@
-//  Array de productos
+// --- PRODUCTOS ---
 const productos = [
     { id: 1, nombre: "test1", precio: 100, imagen: "assets/1.jpg", descripcion: "nose", miniaturas: ["assets/1.jpg"], atributo: "nose" },
     { id: 2, nombre: "test2", precio: 80, imagen: "assets/2.jpg", descripcion: "nose", miniaturas: ["assets/2.jpg", "assets/1.jpg"], atributo: "nose" },
@@ -10,7 +10,7 @@ const productos = [
     { id: 8, nombre: "titulo", precio: 0, imagen: "assets/3.jpg", descripcion: "nose", miniaturas: ["assets/3.jpg"], atributo: "nose" }
 ];
 
-// ----------- SESIÓN DE USUARIO TEMPORAL -----------
+// --- SESIÓN / USUARIO ---
 function usuarioActivo() {
     return !!localStorage.getItem("userActivo");
 }
@@ -18,7 +18,7 @@ function getUsuarioActivo() {
     return JSON.parse(localStorage.getItem("userActivo"));
 }
 
-// ----------- CARRITO FUNCIONES -----------
+// --- CARRITO ---
 function getCart() {
     if (!usuarioActivo()) return [];
     return JSON.parse(localStorage.getItem("informacion-carrito")) || [];
@@ -201,7 +201,7 @@ function pagarCarrito() {
     renderCart();
 }
 
-// ----------- REGISTRO Y LOGIN -----------
+// --- REGISTRO DE USUARIO ---
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("registroForm");
     const nombre = document.getElementById("nombre");
@@ -212,13 +212,124 @@ document.addEventListener("DOMContentLoaded", () => {
     const regionSelect = document.getElementById("region");
     const comunaSelect = document.getElementById("comuna");
 
-    // comunasPorRegion igual que tu script actual
+    // Diccionario de comunas por región
+    const comunasPorRegion = {
+        "Arica y Parinacota": ["Arica", "Camarones", "Putre", "General Lagos"],
+        "Tarapacá": ["Iquique", "Alto Hospicio", "Pozo Almonte", "Camiña", "Colchane", "Huara", "Pica"],
+        "Antofagasta": ["Antofagasta", "Mejillones", "Sierra Gorda", "Taltal", "Calama", "Ollagüe", "San Pedro de Atacama", "Tocopilla", "María Elena"],
+        "Atacama": ["Copiapó", "Caldera", "Tierra Amarilla", "Chañaral", "Diego de Almagro", "Vallenar", "Alto del Carmen", "Freirina", "Huasco"],
+        "Coquimbo": ["La Serena", "Coquimbo", "Andacollo", "La Higuera", "Paiguano", "Vicuña", "Illapel", "Canela", "Los Vilos", "Salamanca", "Ovalle", "Combarbalá", "Monte Patria", "Punitaqui", "Río Hurtado"],
+        "Valparaíso": ["Valparaíso", "Casablanca", "Concón", "Juan Fernández", "Puchuncaví", "Quintero", "Viña del Mar", "Isla de Pascua", "Los Andes", "Calle Larga", "Rinconada", "San Esteban", "La Ligua", "Cabildo", "Papudo", "Petorca", "Zapallar", "Quillota", "La Calera", "Hijuelas", "La Cruz", "Nogales", "San Antonio", "Algarrobo", "Cartagena", "El Quisco", "El Tabo", "Santo Domingo", "San Felipe", "Catemu", "Llaillay", "Panquehue", "Putaendo", "Santa María"],
+        "Metropolitana": ["Cerrillos", "Cerro Navia", "Conchalí", "El Bosque", "Estación Central", "Huechuraba", "Independencia", "La Cisterna", "La Florida", "La Granja", "La Pintana", "La Reina", "Las Condes", "Lo Barnechea", "Lo Espejo", "Lo Prado", "Macul", "Maipú", "Ñuñoa", "Pedro Aguirre Cerda", "Peñalolén", "Providencia", "Pudahuel", "Quilicura", "Quinta Normal", "Recoleta", "Renca", "San Joaquín", "San Miguel", "San Ramón", "Vitacura", "Puente Alto", "Pirque", "San José de Maipo", "Colina", "Lampa", "Tiltil", "San Bernardo", "Buin", "Calera de Tango", "Paine", "Melipilla", "Alhué", "Curacaví", "María Pinto", "San Pedro", "Talagante", "El Monte", "Isla de Maipo", "Padre Hurtado", "Peñaflor"],
+        "O´Higgins": ["Rancagua", "Codegua", "Coinco", "Coltauco", "Doñihue", "Graneros", "Las Cabras", "Machalí", "Malloa", "Mostazal", "Olivar", "Peumo", "Pichidegua", "Quinta de Tilcoco", "Rengo", "Requínoa", "San Vicente", "Pichilemu", "La Estrella", "Litueche", "Marchihue", "Navidad", "Paredones", "San Fernando", "Chépica", "Chimbarongo", "Lolol", "Nancagua", "Palmilla", "Peralillo", "Placilla", "Pumanque", "Santa Cruz"],
+        "Maule": ["Talca", "Constitución", "Curepto", "Empedrado", "Maule", "Pelarco", "Pencahue", "Río Claro", "San Clemente", "San Rafael", "Cauquenes", "Chanco", "Pelluhue", "Curicó", "Hualañé", "Licantén", "Molina", "Rauco", "Romeral", "Sagrada Familia", "Teno", "Vichuquén", "Linares", "Colbún", "Longaví", "Parral", "Retiro", "San Javier", "Villa Alegre", "Yerbas Buenas"],
+        "Ñuble": ["Bulnes", "Chillán", "Chillán Viejo", "Cobquecura", "Coelemu", "Coihueco", "El Carmen", "Ninhue", "Ñiquén", "Pemuco", "Pinto", "Quillón", "Quirihue", "Ránquil", "San Carlos", "San Fabián", "San Ignacio", "San Nicolás", "Treguaco", "Yungay"],
+        "Biobío": ["Concepción", "Coronel", "Chiguayante", "Florida", "Hualqui", "Lota", "Penco", "San Pedro de la Paz", "Santa Juana", "Talcahuano", "Tomé", "Hualpén", "Lebu", "Arauco", "Cañete", "Contulmo", "Curanilahue", "Los Álamos", "Tirúa", "Los Ángeles", "Antuco", "Cabrero", "Laja", "Mulchén", "Nacimiento", "Negrete", "Quilaco", "Quilleco", "San Rosendo", "Santa Bárbara", "Tucapel", "Yumbel", "Alto Biobío"],
+        "Araucanía": ["Temuco", "Carahue", "Cunco", "Curarrehue", "Freire", "Galvarino", "Gorbea", "Lautaro", "Loncoche", "Melipeuco", "Nueva Imperial", "Padre Las Casas", "Perquenco", "Pitrufquén", "Pucón", "Saavedra", "Teodoro Schmidt", "Toltén", "Vilcún", "Villarrica", "Cholchol", "Angol", "Collipulli", "Ercilla", "Lonquimay", "Los Sauces", "Lumaco", "Purén", "Renaico", "Traiguén", "Victoria"],
+        "Los Ríos": ["Valdivia", "Corral", "Lanco", "Los Lagos", "Máfil", "Mariquina", "Paillaco", "Panguipulli", "La Unión", "Futrono", "Lago Ranco", "Río Bueno"],
+        "Los Lagos": ["Puerto Montt", "Calbuco", "Cochamó", "Fresia", "Frutillar", "Los Muermos", "Llanquihue", "Maullín", "Puerto Varas", "Castro", "Chonchi", "Curaco de Vélez", "Dalcahue", "Puqueldón", "Queilén", "Quellón", "Quemchi", "Quinchao", "Osorno", "Puerto Octay", "Purranque", "Puyehue", "Río Negro", "San Juan de la Costa", "San Pablo"],
+        "Aysén": ["Coyhaique", "Lago Verde", "Aysén", "Cisnes", "Guaitecas", "Río Ibañez", "Chile Chico", "Cochrane", "O'Higgins", "Tortel"],
+        "Magallanes": ["Punta Arenas", "Laguna Blanca", "Río Verde", "San Gregorio", "Cabo de Hornos", "Antártica", "Porvenir", "Primavera", "Timaukel", "Natales", "Torres del Paine"]
+    };
+
+    // Actualiza comunas al cambiar la región
+    if (regionSelect && comunaSelect) {
+        regionSelect.addEventListener("change", () => {
+            const comunas = comunasPorRegion[regionSelect.value] || [];
+            comunaSelect.innerHTML = '<option value="" selected disabled>--Seleccione la comuna--</option>';
+            comunas.forEach(comuna => {
+                const option = document.createElement("option");
+                option.value = comuna;
+                option.textContent = comuna;
+                comunaSelect.appendChild(option);
+            });
+        });
+    }
+
+    // Validaciones
+    function validarEmail(email) {
+        // Solo acepta los dominios @gmail.com, @duocuc.cl, @profesor.duoc.cl
+        return /^[a-zA-Z0-9._%+-]+@(gmail\.com|duocuc\.cl|profesor\.duoc\.cl)$/.test(email);
+    }
+    function validarPassword(pass) {
+        // De 4 a 10 caracteres
+        return pass.length >= 4 && pass.length <= 10;
+    }
+    function validarTelefono(tel) {
+        if (tel.trim() === "") return true; // Opcional
+        const sanitized = tel.replace(/\s+/g, "");
+        return /^\+569\d{8}$/.test(sanitized);
+    }
 
     if (form) {
         form.addEventListener("submit", (e) => {
             e.preventDefault();
             let valido = true;
-            // Tus validaciones aquí
+
+            // Nombre obligatorio
+            if (!nombre.value.trim()) {
+                nombre.classList.add("is-invalid");
+                valido = false;
+            } else {
+                nombre.classList.remove("is-invalid");
+                nombre.classList.add("is-valid");
+            }
+
+            // Email obligatorio y formato válido
+            if (!email.value.trim() || !validarEmail(email.value.trim())) {
+                email.classList.add("is-invalid");
+                valido = false;
+            } else {
+                email.classList.remove("is-invalid");
+                email.classList.add("is-valid");
+            }
+
+            // Password obligatorio y formato válido
+            if (!password.value || !validarPassword(password.value)) {
+                password.classList.add("is-invalid");
+                valido = false;
+            } else {
+                password.classList.remove("is-invalid");
+                password.classList.add("is-valid");
+            }
+
+            // Password2 obligatorio y debe coincidir
+            if (!password2.value || password.value !== password2.value) {
+                password2.classList.add("is-invalid");
+                valido = false;
+            } else {
+                password2.classList.remove("is-invalid");
+                password2.classList.add("is-valid");
+            }
+
+            // Teléfono opcional pero si se pone debe ser válido
+            if (!validarTelefono(telefono.value)) {
+                telefono.classList.add("is-invalid");
+                valido = false;
+            } else {
+                telefono.classList.remove("is-invalid");
+                telefono.classList.add("is-valid");
+            }
+
+            // Región obligatoria
+            if (!regionSelect.value) {
+                regionSelect.classList.add("is-invalid");
+                valido = false;
+            } else {
+                regionSelect.classList.remove("is-invalid");
+                regionSelect.classList.add("is-valid");
+            }
+
+            // Comuna obligatoria
+            if (!comunaSelect.value) {
+                comunaSelect.classList.add("is-invalid");
+                valido = false;
+            } else {
+                comunaSelect.classList.remove("is-invalid");
+                comunaSelect.classList.add("is-valid");
+            }
+
+            // Si todo OK, guardar y redirigir
             if (valido) {
                 const user = {
                     nombre: nombre.value.trim(),
@@ -236,6 +347,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+// --- LOGIN ---
 document.addEventListener("DOMContentLoaded", () => {
     const loginForm = document.getElementById("loginForm");
     if (loginForm) {
@@ -255,7 +368,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-// ----------- RENDER PRODUCTOS PARA CADA PÁGINA -----------
+// --- RENDER PRODUCTOS PARA CADA PÁGINA ---
 document.addEventListener("DOMContentLoaded", () => {
     // Página Productos
     if (document.getElementById("listado-productos")) {
