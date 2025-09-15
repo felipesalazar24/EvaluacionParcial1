@@ -18,6 +18,10 @@ function getUsuarioActivo() {
     return JSON.parse(localStorage.getItem("userActivo"));
 }
 
+// --- CUPÓN  ---
+let cuponActual = "";
+let descuentoActual = 0;
+
 // --- CARRITO ---
 function getCart() {
     if (!usuarioActivo()) return [];
@@ -152,18 +156,20 @@ function aplicarCupon() {
     const cartTotal = document.getElementById("cart-total");
     const cart = getCart();
     let valorActual = cart.reduce((sum, item) => sum + item.precio * item.cantidad, 0);
-    let descuento = 0;
-    if (input.value.trim().toUpperCase() === "DESCUENTO10") {
-        descuento = valorActual * 0.10;
-        if (cartTotal) cartTotal.textContent = "$ " + (valorActual - descuento).toLocaleString();
+
+    cuponActual = input.value.trim().toUpperCase();
+    descuentoActual = 0;
+
+    if (cuponActual === "DESCUENTO10") {
+        descuentoActual = valorActual * 0.10;
+        cartTotal.textContent = "$ " + (valorActual - descuentoActual).toLocaleString();
         alert("Cupón aplicado: 10% de descuento");
-    } 
-    else if (input.value.trim().toUpperCase() === "DESCUENTO20") {
-        descuento = valorActual * 0.50;
-        if (cartTotal) cartTotal.textContent = "$ " + (valorActual - descuento).toLocaleString();
+    } else if (cuponActual === "DESCUENTO20") {
+        descuentoActual = valorActual * 0.50;
+        cartTotal.textContent = "$ " + (valorActual - descuentoActual).toLocaleString();
         alert("Cupón aplicado: 50% de descuento");
     } else {
-        if (cartTotal) cartTotal.textContent = "$ " + valorActual.toLocaleString();
+        cartTotal.textContent = "$ " + valorActual.toLocaleString();
         alert("Cupón no válido");
     }
 }
@@ -181,11 +187,21 @@ function pagarCarrito() {
     let texto = "PEDIDO\n";
     texto += "Fecha: " + new Date().toLocaleString() + "\n";
     texto += "Usuario: " + (usuario ? usuario.nombre + " (" + usuario.email + ")" : "No identificado") + "\n\n";
+    
+    let total = cart.reduce((sum, item) => sum + item.precio * item.cantidad, 0);
+    let totalFinal = total - descuentoActual;
+
     cart.forEach(item => {
         texto += `Producto: ${item.nombre}\nCantidad: ${item.cantidad}\nPrecio unitario: $${item.precio}\nSubtotal: $${item.precio * item.cantidad}\n\n`;
     });
-    let total = cart.reduce((sum, item) => sum + item.precio * item.cantidad, 0);
-    texto += "TOTAL: $" + total + "\n";
+
+    texto += "Subtotal sin descuento: $" + total + "\n";
+    if (descuentoActual > 0) {
+        texto += "Cupón aplicado: " + cuponActual + "\n";
+        texto += "Descuento: -$" + descuentoActual + "\n";
+    }
+    texto += "TOTAL A PAGAR: $" + totalFinal + "\n";
+
     let blob = new Blob([texto], { type: "text/plain" });
     let url = URL.createObjectURL(blob);
     let a = document.createElement("a");
