@@ -1,13 +1,18 @@
 // --- PRODUCTOS ---
 const productos = [
-    { id: 1, nombre: "test1", precio: 100, imagen: "assets/1.jpg", descripcion: "nose", miniaturas: ["assets/1.jpg"], atributo: "nose" },
-    { id: 2, nombre: "test2", precio: 80, imagen: "assets/2.jpg", descripcion: "nose", miniaturas: ["assets/2.jpg", "assets/1.jpg"], atributo: "nose" },
-    { id: 3, nombre: "test3", precio: 90, imagen: "assets/3.jpg", descripcion: "nose", miniaturas: ["assets/3.jpg","assets/2.jpg","assets/1.jpg"], atributo: "nose" },
-    { id: 4, nombre: "titulo", precio: 0, imagen: "assets/3.jpg", descripcion: "nose", miniaturas: ["assets/3.jpg"], atributo: "nose" },
-    { id: 5, nombre: "titulo", precio: 0, imagen: "assets/3.jpg", descripcion: "nose", miniaturas: ["assets/3.jpg"], atributo: "nose" },
-    { id: 6, nombre: "titulo", precio: 0, imagen: "assets/3.jpg", descripcion: "nose", miniaturas: ["assets/3.jpg"], atributo: "nose" },
-    { id: 7, nombre: "titulo", precio: 0, imagen: "assets/3.jpg", descripcion: "nose", miniaturas: ["assets/3.jpg"], atributo: "nose" },
-    { id: 8, nombre: "titulo", precio: 0, imagen: "assets/3.jpg", descripcion: "nose", miniaturas: ["assets/3.jpg"], atributo: "nose" }
+    { id: 1, nombre: "Logitech G502", precio: 83000, imagen: "assets/M1.jpg", descripcion: "El Logitech G502 LIGHTSPEED es un mouse inalámbrico diseñado para gamers que buscan un alto rendimiento, precisión y libertad de movimiento sin cables. Este modelo combina la icónica forma del G502 con la avanzada tecnología inalámbrica LIGHTSPEED, que ofrece una conexión ultrarrápida y confiable con un tiempo de respuesta de 1 ms. Equipado con el sensor óptico de próxima generación HERO 16K (o en algunas versiones HERO 25K), proporciona una sensibilidad ajustable de hasta 25,600 DPI, garantizando un seguimiento preciso y eficiente en cualquier tipo de juego.", miniaturas: ["assets/M1.jpg","assets/M1.1.jpg","assets/M1.2.jpg","assets/M1.3.jpg"], atributo: "Mpuse" },
+    { id: 2, nombre: "Logitech G305 LightSpeed Wireless", precio: 35000, imagen: "assets/M2.1.jpg", descripcion: "El Logitech G305 LightSpeed es un mouse inalámbrico diseñado para gamers y usuarios que buscan un rendimiento profesional con tecnología avanzada. Incorpora el sensor óptico HERO de próxima generación, que ofrece una precisión excepcional con una resolución ajustable de hasta 12,000 DPI y una eficiencia energética hasta 10 veces superior a generaciones anteriores. Su tecnología inalámbrica LIGHTSPEED garantiza una conexión ultrarrápida con una latencia de solo 1 ms, comparable a la de un mouse con cable.", miniaturas: ["assets/M2.jpg", "assets/1.jpg"], atributo: "Mouse" },
+    { id: 3, nombre: "Logitech G203 Lightsync Black", precio: 20000, imagen: "assets/M3.jpg", descripcion: "El Logitech G203 Lightsync Black es un mouse gamer alámbrico diseñado para ofrecer precisión, personalización y rendimiento en juegos. Cuenta con un sensor óptico ajustable de hasta 8,000 DPI, que garantiza un seguimiento preciso y una respuesta rápida, ideal para jugadores que buscan control y agilidad en sus partidas. Su diseño clásico y ergonómico con 6 botones programables permite adaptar el dispositivo a diferentes estilos de juego y necesidades, mientras que la iluminación RGB LIGHTSYNC ofrece una experiencia visual personalizable con hasta 16.8 millones de colores.", miniaturas: ["assets/3.jpg", "assets/2.jpg", "assets/1.jpg"], atributo: "Mouse" },
+    { id: 4, nombre: "Redragon Kumara K552 Rainbow", precio: 26000, imagen: "assets/T1.jpg", descripcion: "El Redragon Kumara K552 Rainbow es un teclado mecánico compacto tipo tenkeyless (sin teclado numérico), diseñado especialmente para gamers y usuarios que buscan un periférico resistente, funcional y con una estética atractiva gracias a su iluminación RGB Rainbow fija. Equipado con switches Outemu Red, ofrece una pulsación suave y silenciosa con una fuerza de actuación baja, ideal para largas sesiones de juego o escritura.", miniaturas: ["assets/3.jpg"], atributo: "Teclado" },
+    { id: 5, nombre: "Logitech G PRO Mechanical Gaming Keyboard", precio: 100000, imagen: "assets/T2.jpg", descripcion: "El Logitech G PRO Mechanical Gaming Keyboard es un teclado mecánico diseñado especialmente para jugadores profesionales y entusiastas de los esports. Su diseño compacto tenkeyless (sin teclado numérico) libera espacio en el escritorio, facilitando movimientos amplios y precisos con el mouse, ideal para setups de gaming en Chile y torneos presenciales.", miniaturas: ["assets/3.jpg"], atributo: "Teclado" },
+    { id: 6, nombre: "Razer BlackWidow V4 75% - Black", precio: 165000, imagen: "assets/T3.jpg", descripcion: "El Razer BlackWidow V4 75% es un teclado mecánico compacto diseñado para usuarios y gamers que buscan un equilibrio entre personalización, rendimiento y tamaño reducido. Cuenta con switches mecánicos táctiles Razer Orange de tercera generación, que ofrecen una experiencia de tecleo silenciosa pero con una respuesta táctil satisfactoria. Su diseño compacto del 75% incluye teclas de función y flechas, optimizando el espacio sin sacrificar funcionalidad.", miniaturas: ["assets/3.jpg"], atributo: "Teclado" },
+    { id: 7, nombre: "Logitech G435 - Black/Yellow", precio: 58000, imagen: "assets/A1.jpg", descripcion: "Los Logitech G435 son audífonos inalámbricos diseñados especialmente para gaming, que combinan la tecnología LIGHTSPEED y Bluetooth de baja latencia para ofrecer una experiencia de audio de alta calidad y libertad de movimiento. Con un diseño ligero y cómodo, estos auriculares over-ear proporcionan un sonido envolvente gracias a sus drivers de 40 mm y compatibilidad con tecnologías como Dolby Atmos y Windows Sonic. Incorporan micrófonos duales con formación de haces que reducen el ruido de fondo, facilitando una comunicación clara durante las partidas o llamadas.", miniaturas: ["assets/3.jpg"], atributo: "Audifono" },
+    { id: 8, nombre: "Razer BlackShark V2 X", precio: 37000, imagen: "assets/A2.jpg", descripcion: "Los Razer BlackShark V2 X son audífonos diseñados especialmente para gamers y entusiastas de los esports que buscan una experiencia de audio inmersiva, clara y cómoda. Equipados con diafragmas de 50 mm Razer™ TriForce, ofrecen un sonido potente y detallado, con agudos nítidos, medios claros y graves profundos. Su micrófono cardioide Razer™ HyperClear garantiza comunicaciones claras y sin interferencias, mientras que la cancelación pasiva de ruido avanzada permite aislarse del ruido externo para una concentración total durante las partidas.", miniaturas: ["assets/3.jpg"], atributo: "Audifono" },
+    { id: 9, nombre: "Logitech G335 - Black", precio: 43000, imagen: "assets/A3.jpg", descripcion: "Los Logitech G335 son audífonos gamer diseñados para ofrecer una experiencia de sonido clara y envolvente, combinando comodidad y funcionalidad para largas sesiones de juego. Con un diseño ligero y ergonómico, estos auriculares cuentan con una diadema ajustable con suspensión y almohadillas de espuma viscoelástica que proporcionan un ajuste cómodo y estable. Su micrófono boom unidireccional plegable permite una comunicación clara y fácil de silenciar, ideal para juegos en línea y streaming.", miniaturas: ["assets/3.jpg"], atributo: "Audifono" },
+    { id: 10, nombre: "LG UltraGear 24GS60F-B", precio: 119000, imagen: "assets/MO1.jpg", descripcion: "El LG UltraGear 24GS60F-B es un monitor diseñado para gamers que buscan un rendimiento superior y una experiencia visual inmersiva. Cuenta con una pantalla de 23,8 pulgadas Full HD (1920 x 1080) con tecnología IPS, que ofrece colores vibrantes y ángulos de visión amplios de hasta 178°. Su alta tasa de refresco de 180 Hz y un tiempo de respuesta ultrarrápido de 1 ms (GtG) aseguran imágenes fluidas y sin desenfoques, ideales para juegos de acción rápida y competitivo.", miniaturas: ["assets/3.jpg"], atributo: "Monitor" },
+    { id: 11, nombre: "Xiaomi A27Qi", precio: 124000, imagen: "assets/MO2.jpg", descripcion: "El Monitor Xiaomi A27Qi es una pantalla de 27 pulgadas que ofrece una experiencia visual de alta calidad, ideal para usuarios que buscan un equilibrio entre rendimiento, precisión de color y diseño moderno. Con resolución QHD (2560 x 1440) y un panel IPS, proporciona imágenes nítidas, colores vibrantes y ángulos de visión amplios de hasta 178°, lo que permite una visualización cómoda desde diferentes posiciones.", miniaturas: ["assets/3.jpg"], atributo: "Monitor" },
+    { id: 12, nombre: "Xiaomi G34WQi", precio: 240000, imagen: "assets/MO3.jpg", descripcion: "El Monitor Gamer Xiaomi G34WQi es una pantalla curva ultrapanorámica de 34 pulgadas diseñada para ofrecer una experiencia visual inmersiva y de alto rendimiento, ideal para gamers y usuarios que buscan productividad multitarea. Con resolución WQHD (3440 x 1440), tasa de refresco de 180 Hz y un tiempo de respuesta de 1 ms (MPRT), este monitor garantiza imágenes nítidas, movimientos fluidos y colores vibrantes. Su panel VA con curvatura 1500R replica la forma natural del ojo humano, proporcionando una visualización cómoda y envolvente.", miniaturas: ["assets/3.jpg"], atributo: "Monitor" }
+
 ];
 
 // --- SESIÓN / USUARIO ---
@@ -42,7 +47,7 @@ function addToCart(productId, cantidad = 1) {
         item.cantidad += cantidad;
     } else {
         let prod = productos.find(p => p.id === productId);
-        if (prod) cart.push({...prod, cantidad});
+        if (prod) cart.push({ ...prod, cantidad });
     }
     saveCart(cart);
     updateCartCount();
@@ -187,7 +192,7 @@ function pagarCarrito() {
     let texto = "PEDIDO\n";
     texto += "Fecha: " + new Date().toLocaleString() + "\n";
     texto += "Usuario: " + (usuario ? usuario.nombre + " (" + usuario.email + ")" : "No identificado") + "\n\n";
-    
+
     let total = cart.reduce((sum, item) => sum + item.precio * item.cantidad, 0);
     let totalFinal = total - descuentoActual;
 
@@ -442,8 +447,8 @@ document.addEventListener("DOMContentLoaded", () => {
             `<img src="${src}" class="img-thumbnail thumb" style="height:60px;width:60px;object-fit:cover;cursor:pointer;" onclick="changeImg('${src}')">`
         ).join('');
         // Productos relacionados
-        if(document.getElementById("related-products")) {
-            let rels = productos.filter(p => p.id !== prod.id).slice(0,5);
+        if (document.getElementById("related-products")) {
+            let rels = productos.filter(p => p.id !== prod.id).slice(0, 5);
             let relHTML = rels.map(p => `
                 <a href="producto.html?id=${p.id}">
                     <img src="${p.imagen}" alt="${p.nombre}" class="img-thumbnail" style="height:100px;width:100px;object-fit:cover;">
@@ -454,7 +459,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Botón añadir al carrito
         const btnCarrito = document.getElementById("btn-add-cart");
         if (btnCarrito) {
-            btnCarrito.onclick = function() {
+            btnCarrito.onclick = function () {
                 const cantidad = parseInt(document.getElementById("cantidad").value) || 1;
                 addToCart(prod.id, cantidad);
             };
@@ -482,7 +487,7 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("btn-login")?.classList.remove("d-none");
             document.getElementById("btn-register")?.classList.remove("d-none");
         }
-        logoutBtn.onclick = function(e) {
+        logoutBtn.onclick = function (e) {
             e.preventDefault();
             localStorage.removeItem("userActivo");
             saveCart([]);
@@ -495,7 +500,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //  Cambiar miniatura principal
 function changeImg(src) {
-    if(document.getElementById('main-img')) {
+    if (document.getElementById('main-img')) {
         document.getElementById('main-img').src = src;
     }
 }
