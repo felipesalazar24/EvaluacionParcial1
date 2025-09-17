@@ -1,6 +1,6 @@
 // --- PRODUCTOS ---
 const productos = [
-    { id: 1, nombre: "Logitech G502", precio: 83000, imagen: "assets/M1.jpg", descripcion: "El Logitech G502 LIGHTSPEED es un mouse inalámbrico diseñado para gamers que buscan un alto rendimiento, precisión y libertad de movimiento sin cables. Este modelo combina la icónica forma del G502 con la avanzada tecnología inalámbrica LIGHTSPEED, que ofrece una conexión ultrarrápida y confiable con un tiempo de respuesta de 1 ms. Equipado con el sensor óptico de próxima generación HERO 16K (o en algunas versiones HERO 25K), proporciona una sensibilidad ajustable de hasta 25,600 DPI, garantizando un seguimiento preciso y eficiente en cualquier tipo de juego.", miniaturas: ["assets/M1.jpg","assets/M1.1.jpg","assets/M1.2.jpg","assets/M1.3.jpg"], atributo: "Mpuse" },
+    { id: 1, nombre: "Logitech G502", precio: 83000, imagen: "assets/M1.jpg", descripcion: "El Logitech G502 LIGHTSPEED es un mouse inalámbrico diseñado para gamers que buscan un alto rendimiento, precisión y libertad de movimiento sin cables. Este modelo combina la icónica forma del G502 con la avanzada tecnología inalámbrica LIGHTSPEED, que ofrece una conexión ultrarrápida y confiable con un tiempo de respuesta de 1 ms. Equipado con el sensor óptico de próxima generación HERO 16K (o en algunas versiones HERO 25K), proporciona una sensibilidad ajustable de hasta 25,600 DPI, garantizando un seguimiento preciso y eficiente en cualquier tipo de juego.", miniaturas: ["assets/M1.jpg","assets/M1.1.jpg","assets/M1.2.jpg","assets/M1.3.jpg"], atributo: "Mouse" },
     { id: 2, nombre: "Logitech G305 LightSpeed Wireless", precio: 35000, imagen: "assets/M2.1.jpg", descripcion: "El Logitech G305 LightSpeed es un mouse inalámbrico diseñado para gamers y usuarios que buscan un rendimiento profesional con tecnología avanzada. Incorpora el sensor óptico HERO de próxima generación, que ofrece una precisión excepcional con una resolución ajustable de hasta 12,000 DPI y una eficiencia energética hasta 10 veces superior a generaciones anteriores. Su tecnología inalámbrica LIGHTSPEED garantiza una conexión ultrarrápida con una latencia de solo 1 ms, comparable a la de un mouse con cable.", miniaturas: ["assets/M2.jpg", "assets/1.jpg"], atributo: "Mouse" },
     { id: 3, nombre: "Logitech G203 Lightsync Black", precio: 20000, imagen: "assets/M3.jpg", descripcion: "El Logitech G203 Lightsync Black es un mouse gamer alámbrico diseñado para ofrecer precisión, personalización y rendimiento en juegos. Cuenta con un sensor óptico ajustable de hasta 8,000 DPI, que garantiza un seguimiento preciso y una respuesta rápida, ideal para jugadores que buscan control y agilidad en sus partidas. Su diseño clásico y ergonómico con 6 botones programables permite adaptar el dispositivo a diferentes estilos de juego y necesidades, mientras que la iluminación RGB LIGHTSYNC ofrece una experiencia visual personalizable con hasta 16.8 millones de colores.", miniaturas: ["assets/3.jpg", "assets/2.jpg", "assets/1.jpg"], atributo: "Mouse" },
     { id: 4, nombre: "Redragon Kumara K552 Rainbow", precio: 26000, imagen: "assets/T1.jpg", descripcion: "El Redragon Kumara K552 Rainbow es un teclado mecánico compacto tipo tenkeyless (sin teclado numérico), diseñado especialmente para gamers y usuarios que buscan un periférico resistente, funcional y con una estética atractiva gracias a su iluminación RGB Rainbow fija. Equipado con switches Outemu Red, ofrece una pulsación suave y silenciosa con una fuerza de actuación baja, ideal para largas sesiones de juego o escritura.", miniaturas: ["assets/3.jpg"], atributo: "Teclado" },
@@ -206,6 +206,13 @@ function pagarCarrito() {
         texto += "Descuento: -$" + descuentoActual + "\n";
     }
     texto += "TOTAL A PAGAR: $" + totalFinal + "\n";
+    
+    // Guardar contador de ventas por producto
+    cart.forEach(item => {
+        let countKey = "compras-producto-" + item.id;
+        let compras = parseInt(localStorage.getItem(countKey)) || 0;
+        localStorage.setItem(countKey, compras + item.cantidad);
+    });
 
     let blob = new Blob([texto], { type: "text/plain" });
     let url = URL.createObjectURL(blob);
@@ -410,26 +417,32 @@ document.addEventListener("DOMContentLoaded", () => {
         `).join('');
         contenedor.innerHTML = html;
     }
-    // Página Home (productos destacados)
-    if (document.getElementById("productos-destacados")) {
-        const contenedor = document.getElementById("productos-destacados");
-        let destacados = productos.slice(0, 8);
-        let html = destacados.map(p => `
-            <div class="col-6 col-md-3">
-                <div class="card h-100">
-                    <a href="producto.html?id=${p.id}">
-                        <img src="${p.imagen}" alt="${p.nombre}" class="img-fluid" style="height:120px;object-fit:cover;width:100%;">
-                    </a>
-                    <div class="card-body text-center">
-                        <a href="producto.html?id=${p.id}" class="card-title h6 text-primary text-decoration-none">${p.nombre}</a>
-                        <p class="text-muted mb-1 small">${p.atributo}</p>
-                        <p class="fw-bold mb-0">$${p.precio}</p>
-                    </div>
+    // Página Home (productos destacados) - ORDENADOS POR MÁS COMPRADOS
+if (document.getElementById("productos-destacados")) {
+    const contenedor = document.getElementById("productos-destacados");
+    // Ordenar productos por cantidad vendida (más comprados primero)
+    let productosOrdenados = productos.slice().sort((a, b) => {
+        let aCount = parseInt(localStorage.getItem("compras-producto-" + a.id)) || 0;
+        let bCount = parseInt(localStorage.getItem("compras-producto-" + b.id)) || 0;
+        return bCount - aCount;
+    });
+    let destacados = productosOrdenados.slice(0, 8); // los 8 más vendidos
+    let html = destacados.map(p => `
+        <div class="col-6 col-md-3">
+            <div class="card h-100">
+                <a href="producto.html?id=${p.id}">
+                    <img src="${p.imagen}" alt="${p.nombre}" class="img-fluid" style="height:120px;object-fit:cover;width:100%;">
+                </a>
+                <div class="card-body text-center">
+                    <a href="producto.html?id=${p.id}" class="card-title h6 text-primary text-decoration-none">${p.nombre}</a>
+                    <p class="text-muted mb-1 small">${p.atributo}</p>
+                    <p class="fw-bold mb-0">$${p.precio}</p>
                 </div>
             </div>
-        `).join('');
-        contenedor.innerHTML = html;
-    }
+        </div>
+    `).join('');
+    contenedor.innerHTML = html;
+}
     // Detalle de producto
     if (document.getElementById("main-img")) {
         const params = new URLSearchParams(window.location.search);
@@ -446,16 +459,25 @@ document.addEventListener("DOMContentLoaded", () => {
         thumbsContainer.innerHTML = prod.miniaturas.map(src =>
             `<img src="${src}" class="img-thumbnail thumb" style="height:60px;width:60px;object-fit:cover;cursor:pointer;" onclick="changeImg('${src}')">`
         ).join('');
-        // Productos relacionados
-        if (document.getElementById("related-products")) {
-            let rels = productos.filter(p => p.id !== prod.id).slice(0, 5);
-            let relHTML = rels.map(p => `
-                <a href="producto.html?id=${p.id}">
-                    <img src="${p.imagen}" alt="${p.nombre}" class="img-thumbnail" style="height:100px;width:100px;object-fit:cover;">
-                </a>
-            `).join('');
-            document.getElementById("related-products").innerHTML = relHTML;
-        }
+        // Productos relacionados (por atributo similar)
+    if (document.getElementById("related-products")) {
+    let rels = productos
+        .filter(p => p.id !== prod.id && (
+            // Mismo atributo exacto
+            p.atributo.toLowerCase() === prod.atributo.toLowerCase() ||
+            // Palabra clave parecida (ej: teclado y mouse = "periférico")
+            (["Teclado", "Mouse", "Audifono", "Monitor"].includes(p.atributo.toLowerCase()) &&
+             ["Teclado", "Mouse", "Audifono", "Monitor"].includes(prod.atributo.toLowerCase()))
+        ))
+        .slice(0, 5);
+
+    let relHTML = rels.map(p => `
+        <a href="producto.html?id=${p.id}">
+            <img src="${p.imagen}" alt="${p.nombre}" class="img-thumbnail" style="height:100px;width:100px;object-fit:cover;">
+        </a>
+    `).join('');
+    document.getElementById("related-products").innerHTML = relHTML;
+}
         // Botón añadir al carrito
         const btnCarrito = document.getElementById("btn-add-cart");
         if (btnCarrito) {
