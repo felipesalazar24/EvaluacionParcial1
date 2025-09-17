@@ -62,3 +62,21 @@ button[type="submit"]:hover {
   font-size: 0.75rem;
   border-radius: 0.3rem;
 }
+
+/* Miniatura de producto: área fija, imagen centrada, sin recorte ni estiramiento */
+.card-img-area {
+  width: 100%;
+  height: 120px;     /* puedes ajustar el alto aquí */
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.card-img-area img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+}

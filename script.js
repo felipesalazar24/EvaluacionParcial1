@@ -400,24 +400,27 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
     // Página Productos
     if (document.getElementById("listado-productos")) {
-        const contenedor = document.getElementById("listado-productos");
-        let html = productos.map(p => `
-            <div class="col-6 col-md-3">
-                <div class="card h-100 text-center bg-light">
-                    <a href="producto.html?id=${p.id}">
-                        <img src="${p.imagen}" alt="${p.nombre}" class="img-fluid" style="height:120px;object-fit:cover;width:100%;">
-                    </a>
-                    <div class="card-body">
-                        <a href="producto.html?id=${p.id}" class="h6 text-primary text-decoration-none">${p.nombre}</a>
-                        <p class="fw-bold mb-1">$${p.precio}</p>
-                        <a href="producto.html?id=${p.id}" class="btn btn-outline-dark btn-sm">Ver</a>
+    const contenedor = document.getElementById("listado-productos");
+    let html = productos.map(p => `
+        <div class="col-6 col-md-3">
+            <div class="card h-100 text-center bg-light">
+                <a href="producto.html?id=${p.id}">
+                    <div class="card-img-area">
+                        <img src="${p.imagen}" alt="${p.nombre}">
                     </div>
+                </a>
+                <div class="card-body">
+                    <a href="producto.html?id=${p.id}" class="h6 text-primary text-decoration-none">${p.nombre}</a>
+                    <p class="fw-bold mb-1">$${p.precio}</p>
+                    <a href="producto.html?id=${p.id}" class="btn btn-outline-dark btn-sm">Ver</a>
                 </div>
             </div>
-        `).join('');
-        contenedor.innerHTML = html;
-    }
-    // Página Home (productos destacados) - ORDENADOS POR MÁS COMPRADOS
+        </div>
+    `).join('');
+    contenedor.innerHTML = html;
+}
+
+// Página Home (productos destacados) - ORDENADOS POR MÁS COMPRADOS
 if (document.getElementById("productos-destacados")) {
     const contenedor = document.getElementById("productos-destacados");
     // Ordenar productos por cantidad vendida (más comprados primero)
@@ -431,7 +434,9 @@ if (document.getElementById("productos-destacados")) {
         <div class="col-6 col-md-3">
             <div class="card h-100">
                 <a href="producto.html?id=${p.id}">
-                    <img src="${p.imagen}" alt="${p.nombre}" class="img-fluid" style="height:120px;object-fit:cover;width:100%;">
+                    <div class="card-img-area">
+                        <img src="${p.imagen}" alt="${p.nombre}">
+                    </div>
                 </a>
                 <div class="card-body text-center">
                     <a href="producto.html?id=${p.id}" class="card-title h6 text-primary text-decoration-none">${p.nombre}</a>
