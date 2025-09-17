@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel de Administración</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Puedes usar Bootstrap si quieres, pero este diseño es con CSS personalizado -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,500&display=swap">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', Arial, sans-serif;
+            background: #fafafa;
+        }
+        .admin-wrapper {
+            display: flex;
+            height: 98vh;
+            border: 2px solid #222;
+            box-sizing: border-box;
+        }
+        .sidebar {
+            background: #fff;
+            width: 210px;
+            border-right: 1px solid #dadada;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-width: 170px;
+        }
+        .sidebar .top-section {
+            padding: 22px 0 0 0;
+        }
+        .sidebar .logo {
+            font-weight: bold;
+            font-size: 21px;
+            display: flex;
+            align-items: center;
+            margin-left: 24px;
+            margin-bottom: 30px;
+        }
+        .sidebar .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 7px 24px;
+            color: #222;
+            text-decoration: none;
+            font-size: 15px;
+            border-left: 3px solid transparent;
+            transition: background 0.12s, border-color 0.15s;
+        }
+        .nav-link.active, .nav-link:hover {
+            background: #f2f4f8;
+            border-left: 3px solid #2c63ff;
+            color: #2c63ff;
+        }
+        .nav-link i {
+            margin-right: 11px;
+            font-size: 16px;
+            width: 18px;
+            text-align: center;
+        }
+        .sidebar .bottom-section {
+            border-top: 1px solid #e2e2e2;
+            padding: 14px 0 9px 0;
+            margin-top: 8px;
+        }
+        .profile-link {
+            display: flex;
+            align-items: center;
+            padding: 9px 24px;
+            font-weight: 500;
+            color: #111;
+            text-decoration: none;
+            font-size: 15px;
+            border-radius: 22px;
+            gap: 10px;
+        }
+        .profile-link i {
+            font-size: 18px;
+            background: #111;
+            color: #fff;
+            border-radius: 50%;
+            padding: 4px;
+        }
+        /* Main Panel */
+        .main-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #f7f7f7;
+        }
+        .main-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #dadada;
+            padding: 28px 32px 12px 32px;
+            min-height: 60px;
+        }
+        .main-header h2 {
+            margin: 0 0 0 8px;
+            font-size: 27px;
+            font-weight: 500;
+            color: #191919;
+        }
+        .main-header .notif {
+            font-size: 19px;
+            color: #111;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+        .main-content {
+            flex: 2;
+            border-bottom: 1px solid #dadada;
+            background: #f7f7f7;
+        }
+        .main-content2 {
+            flex: 2;
+            background: #f7f7f7;
+        }
+        @media (max-width: 700px) {
+            .admin-wrapper {
+                flex-direction: column;
+            }
+            .sidebar {
+                flex-direction: row;
+                width: 100%;
+                min-width: 0;
+                border-right: none;
+                border-bottom: 1px solid #dadada;
+            }
+            .sidebar .top-section, .sidebar .bottom-section {
+                padding: 4px 0;
+                margin: 0;
+            }
+            .main-header {
+                padding: 18px 10px 8px 10px;
+            }
+        }
+    </style>
+    <!-- Iconos (FontAwesome CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <div class="admin-wrapper">
+        <div class="sidebar">
+            <div>
+                <div class="top-section">
+                    <div class="logo">
+                        TecnoPeriféricos
+                    </div>
+                    <div class="nav-links">
+                        <a href="#" class="nav-link active"><i class="fa-solid fa-table-cells-large"></i> Dashboard</a>
+                        <a href="#" class="nav-link"><i class="fa-solid fa-cart-shopping"></i> Pedidos</a>
+                        <a href="#" class="nav-link"><i class="fa-solid fa-box-archive"></i> Inventario</a>
+                        <a href="#" class="nav-link"><i class="fa-solid fa-chart-line"></i> Reportes</a>
+                        <a href="#" class="nav-link"><i class="fa-regular fa-user"></i> Empleados</a>
+                        <a href="#" class="nav-link"><i class="fa-regular fa-address-book"></i> Clientes</a>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="nav-links" style="margin-top: 10px; margin-bottom: 10px;">
+                    <a href="#" class="nav-link"><i class="fa-solid fa-gear"></i> Configuración</a>
+                    <a href="#" class="nav-link"><i class="fa-regular fa-user"></i> perfil</a>
+                    <a href="#" class="nav-link"><i class="fa-solid fa-magnifying-glass"></i> Buscar</a>
+                    <a href="#" class="nav-link"><i class="fa-regular fa-circle-question"></i> Ayuda</a>
+                </div>
+                <div class="bottom-section">
+                    <a href="#" class="profile-link"><i class="fa-solid fa-user"></i> perfil</a>
+                </div>
+            </div>
+        </div>
+        <div class="main-panel">
+            <div class="main-header">
+                <h2 id="admin-greeting">¡HOLA Administrador!</h2>
+                <i class="fa-regular fa-bell notif"></i>
+            </div>
+            <div class="main-content"></div>
+            <div class="main-content2"></div>
+        </div>
+    </div>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Recupera el usuario activo del localStorage
+        const userActivo = JSON.parse(localStorage.getItem("userActivo"));
+        // Busca el elemento del saludo
+        const greetingEl = document.getElementById("admin-greeting");
+        // Si hay usuario y tiene nombre, salúdalo por su nombre
+        if (userActivo && userActivo.nombre) {
+            greetingEl.textContent = `¡HOLA ${userActivo.nombre}!`;
+        }
+    });
+    </script>
+</body>
+</html>
