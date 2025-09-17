@@ -1,3 +1,10 @@
+// --- ADMINISTRADORES ---
+const administradores = [
+    { email: "matias.vega@duocuc.cl", password: "adminmatias", nombre: "AdminMatias" },
+    { email: "felipe.salazar@duocuc.cl", password: "adminfelipe", nombre: "AdminFelipe" }
+];
+
+
 // --- PRODUCTOS ---
 const productos = [
     { id: 1, nombre: "Logitech G502", precio: 83000, imagen: "assets/M1.jpg", descripcion: "El Logitech G502 LIGHTSPEED es un mouse inalámbrico diseñado para gamers que buscan un alto rendimiento, precisión y libertad de movimiento sin cables. Este modelo combina la icónica forma del G502 con la avanzada tecnología inalámbrica LIGHTSPEED, que ofrece una conexión ultrarrápida y confiable con un tiempo de respuesta de 1 ms. Equipado con el sensor óptico de próxima generación HERO 16K (o en algunas versiones HERO 25K), proporciona una sensibilidad ajustable de hasta 25,600 DPI, garantizando un seguimiento preciso y eficiente en cualquier tipo de juego.", miniaturas: ["assets/M1.jpg","assets/M1.1.jpg","assets/M1.2.jpg","assets/M1.3.jpg"], atributo: "Mouse" },
@@ -21,6 +28,10 @@ function usuarioActivo() {
 }
 function getUsuarioActivo() {
     return JSON.parse(localStorage.getItem("userActivo"));
+}
+function usuarioEsAdmin() {
+    const user = getUsuarioActivo();
+    return user && user.esAdmin;
 }
 
 // --- CUPÓN  ---
@@ -385,8 +396,23 @@ document.addEventListener("DOMContentLoaded", () => {
             const email = document.getElementById("loginEmail").value.trim();
             const password = document.getElementById("loginPassword").value.trim();
             const storedUser = JSON.parse(localStorage.getItem("user"));
+
+            // --- Check si es uno de los administradores ---
+            const admin = administradores.find(a => a.email === email && a.password === password);
+            if (admin) {
+                localStorage.setItem("userActivo", JSON.stringify({
+                    nombre: admin.nombre,
+                    email: admin.email,
+                    esAdmin: true
+                }));
+                alert("✅ Bienvenido Administrador");
+                window.location.href = "index.html";
+                return;
+            }
+
+            // --- Usuario normal ---
             if (storedUser && email === storedUser.email && password === storedUser.password) {
-                localStorage.setItem("userActivo", JSON.stringify(storedUser)); // usuario activo
+                localStorage.setItem("userActivo", JSON.stringify(storedUser)); // usuario activo normal
                 alert("✅ Inicio de sesión exitoso");
                 window.location.href = "index.html";
             } else {
@@ -502,22 +528,42 @@ if (document.getElementById("productos-destacados")) {
     }
     updateCartCount();
 
-    // Header logout button
+    // --- MANEJO DE MENÚ SUPERIOR Y LOGOUT ---
     const logoutBtn = document.getElementById("logout-btn");
-    if (logoutBtn) {
-        if (usuarioActivo()) {
-            logoutBtn.classList.remove("d-none");
-            document.getElementById("btn-login")?.classList.add("d-none");
-            document.getElementById("btn-register")?.classList.add("d-none");
+    const loginBtn = document.getElementById("btn-login");
+    const registerBtn = document.getElementById("btn-register");
+    const carritoBtn = document.getElementById("btn-carrito");
+    const adminBtn = document.getElementById("admin-btn");
+
+    // Mostrar/ocultar botones según el tipo de usuario
+    if (usuarioActivo()) {
+        if (logoutBtn) logoutBtn.classList.remove("d-none");
+        if (loginBtn) loginBtn.classList.add("d-none");
+        if (registerBtn) registerBtn.classList.add("d-none");
+
+    if (usuarioEsAdmin()) {
+        if (carritoBtn) carritoBtn.classList.remove("d-none"); // El admin ve el carrito igual que los usuarios normales
+        if (adminBtn) adminBtn.classList.remove("d-none");
         } else {
-            logoutBtn.classList.add("d-none");
-            document.getElementById("btn-login")?.classList.remove("d-none");
-            document.getElementById("btn-register")?.classList.remove("d-none");
+        if (carritoBtn) carritoBtn.classList.remove("d-none");
+        if (adminBtn) adminBtn.classList.add("d-none");
         }
+    } else {
+        if (logoutBtn) logoutBtn.classList.add("d-none");
+        if (loginBtn) loginBtn.classList.remove("d-none");
+        if (registerBtn) registerBtn.classList.remove("d-none");
+        if (carritoBtn) carritoBtn.classList.remove("d-none");
+        if (adminBtn) adminBtn.classList.add("d-none");
+    }
+
+    // Logout
+    if (logoutBtn) {
         logoutBtn.onclick = function (e) {
             e.preventDefault();
             localStorage.removeItem("userActivo");
-            saveCart([]);
+            if (!usuarioEsAdmin()) {
+                saveCart([]);
+            }
             updateCartCount();
             alert("Sesión cerrada.");
             window.location.href = "index.html";
