@@ -528,22 +528,42 @@ if (document.getElementById("productos-destacados")) {
     }
     updateCartCount();
 
-    // Header logout button
+    // --- MANEJO DE MENÚ SUPERIOR Y LOGOUT ---
     const logoutBtn = document.getElementById("logout-btn");
-    if (logoutBtn) {
-        if (usuarioActivo()) {
-            logoutBtn.classList.remove("d-none");
-            document.getElementById("btn-login")?.classList.add("d-none");
-            document.getElementById("btn-register")?.classList.add("d-none");
+    const loginBtn = document.getElementById("btn-login");
+    const registerBtn = document.getElementById("btn-register");
+    const carritoBtn = document.getElementById("btn-carrito");
+    const adminBtn = document.getElementById("admin-btn");
+
+    // Mostrar/ocultar botones según el tipo de usuario
+    if (usuarioActivo()) {
+        if (logoutBtn) logoutBtn.classList.remove("d-none");
+        if (loginBtn) loginBtn.classList.add("d-none");
+        if (registerBtn) registerBtn.classList.add("d-none");
+
+    if (usuarioEsAdmin()) {
+        if (carritoBtn) carritoBtn.classList.remove("d-none"); // El admin ve el carrito igual que los usuarios normales
+        if (adminBtn) adminBtn.classList.remove("d-none");
         } else {
-            logoutBtn.classList.add("d-none");
-            document.getElementById("btn-login")?.classList.remove("d-none");
-            document.getElementById("btn-register")?.classList.remove("d-none");
+        if (carritoBtn) carritoBtn.classList.remove("d-none");
+        if (adminBtn) adminBtn.classList.add("d-none");
         }
+    } else {
+        if (logoutBtn) logoutBtn.classList.add("d-none");
+        if (loginBtn) loginBtn.classList.remove("d-none");
+        if (registerBtn) registerBtn.classList.remove("d-none");
+        if (carritoBtn) carritoBtn.classList.remove("d-none");
+        if (adminBtn) adminBtn.classList.add("d-none");
+    }
+
+    // Logout
+    if (logoutBtn) {
         logoutBtn.onclick = function (e) {
             e.preventDefault();
             localStorage.removeItem("userActivo");
-            saveCart([]);
+            if (!usuarioEsAdmin()) {
+                saveCart([]);
+            }
             updateCartCount();
             alert("Sesión cerrada.");
             window.location.href = "index.html";
