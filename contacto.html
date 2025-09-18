@@ -29,10 +29,41 @@
             <a href="admin.html" class="btn btn-warning d-none" id="admin-btn">Administrar</a>
             <a href="#" class="btn btn-outline-danger d-none" id="logout-btn">Cerrar sesión</a>
         </div>
-
+        
     </div>
 
-    
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-md-7 col-lg-6">
+                <div class="card shadow">
+                    <div class="card-header bg-secondary text-white text-center">
+                        <h4>Formulario de Contacto</h4>
+                    </div>
+                    <div class="card-body">
+                        <form id="contact-form" novalidate>
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Nombre Completo</label>
+                                <input type="text" class="form-control" id="nombre" required>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="correo" class="form-label">Correo</label>
+                                <input type="email" class="form-control" id="correo" required>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="contenido" class="form-label">Contenido</label>
+                                <textarea class="form-control" id="contenido" rows="4" required></textarea>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <button type="submit" class="btn btn-dark w-100">Enviar mensaje</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 
