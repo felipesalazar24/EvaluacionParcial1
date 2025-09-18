@@ -1,7 +1,7 @@
 // --- ADMINISTRADORES ---
 const administradores = [
-    { email: "matias.vega@duocuc.cl", password: "adminmatias", nombre: "AdminMatias" },
-    { email: "felipe.salazar@duocuc.cl", password: "adminfelipe", nombre: "AdminFelipe" }
+    { email: "matias.vega@duocuc.cl", password: "adminmatias", nombre: "Matias" },
+    { email: "felipe.salazar@duocuc.cl", password: "adminfelipe", nombre: "Felipe" }
 ];
 
 
