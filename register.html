@@ -30,12 +30,12 @@
                             <div class="mb-3">
                                 <label for="email" class="form-label">Correo Electrónico</label>
                                 <input type="email" class="form-control" id="email" required>
-                                <div class="invalid-feedback">Por favor ingresa un correo electrónico válido.</div>
+                                <div class="invalid-feedback">Esta dirección de correo no es válida.</div>
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Contraseña</label>
                                 <input type="password" class="form-control" id="password" required>
-                                <div class="invalid-feedback">Por favor ingresa una contraseña válida</div>
+                                <div class="invalid-feedback">La contraseña debe tener entre 4 y 10 caracteres.</div>
                             </div>
                             <div class="mb-3">
                                 <label for="password2" class="form-label">Confirmar Contraseña</label>
@@ -70,13 +70,16 @@
                                     <option value="Aysén">Aysén</option>
                                     <option value="Magallanes">Magallanes</option>
                                 </select>
+                                <div class="invalid-feedback">Por favor selecciona una región.</div>
                             </div>
 
                             <div class="mb-3">
                                 <label for="comuna" class="form-label">Comuna</label>
                                 <select class="form-select" id="comuna">
                                     <option value="" selected disabled>--Seleccione la comuna--</option>
+                                    
                                 </select>
+                                <div class="invalid-feedback">Por favor selecciona una comuna.</div>
                             </div>
                             <button type="submit" class="btn btn-success w-100 mt-3">Registrarse</button>
                             <p class="nav justify-content-center">¿Ya tienes una cuenta?</p>

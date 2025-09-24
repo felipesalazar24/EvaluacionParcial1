@@ -1,7 +1,7 @@
 // --- ADMINISTRADORES ---
 const administradores = [
-    { email: "matias.vega@duocuc.cl", password: "adminmatias", nombre: "Matias" },
-    { email: "felipe.salazar@duocuc.cl", password: "adminfelipe", nombre: "Felipe" }
+    { email: "mati.vegaa@duocuc.cl", password: "adminmatias", nombre: "Matias" },
+    { email: "fe.salazarv@duocuc.cl", password: "adminfelipe", nombre: "Felipe" }
 ];
 
 
@@ -240,7 +240,7 @@ function pagarCarrito() {
     renderCart();
 }
 
-// --- REGISTRO DE USUARIO ---
+// --- REGISTRO DE USUARIO (validación visual mejorada) ---
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("registroForm");
     const nombre = document.getElementById("nombre");
@@ -286,6 +286,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Validaciones
+        function setValid(input) {
+        input.classList.remove("is-invalid");
+        input.classList.add("is-valid");
+        if (input.nextElementSibling && input.nextElementSibling.classList.contains("invalid-feedback")) {
+            input.nextElementSibling.style.display = "none";
+        }
+    }
+    function setInvalid(input, msg) {
+        input.classList.remove("is-valid");
+        input.classList.add("is-invalid");
+        if (input.nextElementSibling && input.nextElementSibling.classList.contains("invalid-feedback")) {
+            input.nextElementSibling.textContent = msg;
+            input.nextElementSibling.style.display = "";
+        }
+    }
+
     function validarEmail(email) {
         // Solo acepta los dominios @gmail.com, @duocuc.cl, @profesor.duoc.cl
         return /^[a-zA-Z0-9._%+-]+@(gmail\.com|duocuc\.cl|profesor\.duoc\.cl)$/.test(email);
@@ -295,7 +311,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return pass.length >= 4 && pass.length <= 10;
     }
     function validarTelefono(tel) {
-        if (tel.trim() === "") return true; // Opcional
+        if (tel.trim() === "") return true;
         const sanitized = tel.replace(/\s+/g, "");
         return /^\+569\d{8}$/.test(sanitized);
     }
@@ -305,67 +321,66 @@ document.addEventListener("DOMContentLoaded", () => {
             e.preventDefault();
             let valido = true;
 
-            // Nombre obligatorio
+            // Nombre
             if (!nombre.value.trim()) {
-                nombre.classList.add("is-invalid");
+                setInvalid(nombre, "Por favor ingresa tu nombre completo.");
                 valido = false;
             } else {
-                nombre.classList.remove("is-invalid");
-                nombre.classList.add("is-valid");
+                setValid(nombre);
             }
 
-            // Email obligatorio y formato válido
-            if (!email.value.trim() || !validarEmail(email.value.trim())) {
-                email.classList.add("is-invalid");
+            // Correo
+            if (!email.value.trim()) {
+                setInvalid(email, "Por favor ingresa tu correo electrónico.");
+                valido = false;
+            } else if (!validarEmail(email.value.trim())) {
+                setInvalid(email, "Esta dirección de correo no es válida.");
                 valido = false;
             } else {
-                email.classList.remove("is-invalid");
-                email.classList.add("is-valid");
+                setValid(email);
             }
 
-            // Password obligatorio y formato válido
-            if (!password.value || !validarPassword(password.value)) {
-                password.classList.add("is-invalid");
+            // Contraseña
+            if (!password.value) {
+                setInvalid(password, "Por favor ingresa una contraseña.");
+                valido = false;
+            } else if (!validarPassword(password.value)) {
+                setInvalid(password, "La contraseña debe tener entre 4 y 10 caracteres.");
                 valido = false;
             } else {
-                password.classList.remove("is-invalid");
-                password.classList.add("is-valid");
+                setValid(password);
             }
 
-            // Password2 obligatorio y debe coincidir
+            // Confirmar contraseña
             if (!password2.value || password.value !== password2.value) {
-                password2.classList.add("is-invalid");
+                setInvalid(password2, "Las contraseñas no coinciden.");
                 valido = false;
             } else {
-                password2.classList.remove("is-invalid");
-                password2.classList.add("is-valid");
+                setValid(password2);
             }
 
-            // Teléfono opcional pero si se pone debe ser válido
+            // Teléfono
             if (!validarTelefono(telefono.value)) {
-                telefono.classList.add("is-invalid");
+                setInvalid(telefono, "Ingresa un número de teléfono válido (+569 12345678).");
                 valido = false;
             } else {
-                telefono.classList.remove("is-invalid");
-                telefono.classList.add("is-valid");
+                setValid(telefono);
             }
 
-            // Región obligatoria
+            // Región
             if (!regionSelect.value) {
-                regionSelect.classList.add("is-invalid");
+                setInvalid(regionSelect, "Por favor selecciona una región.");
                 valido = false;
             } else {
-                regionSelect.classList.remove("is-invalid");
-                regionSelect.classList.add("is-valid");
+                setValid(regionSelect);
             }
 
-            // Comuna obligatoria
+            // Comuna
             if (!comunaSelect.value) {
-                comunaSelect.classList.add("is-invalid");
+                setInvalid(comunaSelect, "Por favor selecciona una comuna.");
                 valido = false;
             } else {
-                comunaSelect.classList.remove("is-invalid");
-                comunaSelect.classList.add("is-valid");
+                setValid(comunaSelect);
             }
 
             // Si todo OK, guardar y redirigir
@@ -381,7 +396,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 localStorage.setItem("user", JSON.stringify(user));
                 alert("Registro exitoso 🎉 Ahora puedes iniciar sesión.");
                 form.reset();
+                [nombre, email, password, password2, telefono, regionSelect, comunaSelect].forEach(i => i.classList.remove('is-valid', 'is-invalid'));
                 window.location.href = "login.html";
+            }
+        });
+
+        // Limpiar marcas al editar
+        [nombre, email, password, password2, telefono, regionSelect, comunaSelect].forEach(input => {
+            if (input) {
+                input.addEventListener('input', () => {
+                    input.classList.remove('is-valid', 'is-invalid');
+                    if (input.nextElementSibling && input.nextElementSibling.classList.contains('invalid-feedback')) {
+                        input.nextElementSibling.style.display = "none";
+                    }
+                });
             }
         });
     }
